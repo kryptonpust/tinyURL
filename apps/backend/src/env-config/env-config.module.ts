@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { TypedConfigModule, dotenvLoader } from 'nest-typed-config';
 import { RootConfig } from './configs/root.config';
-import { configValidator } from './env-config.utils';
+import { configValidator } from './utils/util';
 import { CassandraConfig } from './configs/cassandra.config';
 
 @Global()

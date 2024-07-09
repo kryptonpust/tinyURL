@@ -1,8 +1,41 @@
-import { Injectable } from '@nestjs/common';
+import {
+  EntityNotFound,
+  InjectRepository,
+  Repository,
+} from '@dev101_cloud/nestjs-cassandra-module';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { URLMappingEntity } from './database/entities/url-mapping.entity';
+import { CreateTinyURLDto } from './dto/create-tiny-url.dto';
+import { ShortUIDService } from './tiny-uid/tiny-uid.service';
+import { ZookeeperService } from './zookeeper/zookeeper.service';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  constructor(
+    @InjectRepository(URLMappingEntity)
+    private readonly urlMappingModel: Repository<URLMappingEntity>,
+    private readonly zookeeperService: ZookeeperService,
+    private readonly shortUIDService: ShortUIDService,
+  ) {}
+
+  async createShortURL(createTinyURLDto: CreateTinyURLDto) {
+    // const res = await this.zookeeperService.incrementCounter();
+    return this.urlMappingModel.create({
+      short_url: await this.shortUIDService.generateUID(),
+      long_url: createTinyURLDto.long_url,
+    });
+  }
+
+  async getLongURLByShortUID(shortUID: string) {
+    try {
+      const result = await this.urlMappingModel.findOneOrFail({
+        short_url: shortUID,
+      });
+      return result;
+    } catch (e) {
+      if (e instanceof EntityNotFound) {
+        throw new NotFoundException('Short URL not found');
+      }
+    }
   }
 }

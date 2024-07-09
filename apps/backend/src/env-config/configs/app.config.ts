@@ -21,4 +21,8 @@ export class AppConfig {
   public readonly env!: string;
   @JoiSchema(Joi.string().uri().required())
   public readonly url!: string;
+  @JoiSchema(Joi.string().min(10).required())
+  public readonly shortUIDChars!: string;
+  @JoiSchema(Joi.number().min(1).required())
+  public readonly shortUIDLength!: number;
 }
