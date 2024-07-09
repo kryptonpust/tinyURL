@@ -7,14 +7,12 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { URLMappingEntity } from './database/entities/url-mapping.entity';
 import { CreateTinyURLDto } from './dto/create-tiny-url.dto';
 import { ShortUIDService } from './tiny-uid/tiny-uid.service';
-import { ZookeeperService } from './zookeeper/zookeeper.service';
 
 @Injectable()
 export class AppService {
   constructor(
     @InjectRepository(URLMappingEntity)
     private readonly urlMappingModel: Repository<URLMappingEntity>,
-    private readonly zookeeperService: ZookeeperService,
     private readonly shortUIDService: ShortUIDService,
   ) {}
 

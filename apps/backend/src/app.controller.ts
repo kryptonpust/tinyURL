@@ -30,7 +30,6 @@ export class AppController {
     @Param('shortUID', new JoiPipe(Joi.string().min(1).required()))
     shortUID: string,
   ) {
-    console.log('shortUID', shortUID);
     const longURL = await this.appService.getLongURLByShortUID(shortUID);
     return { url: longURL.long_url };
   }
