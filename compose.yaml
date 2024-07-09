@@ -15,7 +15,7 @@ services:
       - '9042:9042'
     volumes:
       - ./cassandra_data:/bitnami
-  server:
+  backend:
     build:
       context: apps/backend
       dockerfile: Dockerfile.dev
@@ -24,6 +24,7 @@ services:
     volumes:
       - ./apps/backend:/app
       - /app/node_modules
+    env_file: apps/backend/.env
     depends_on:
       - cassandra
       - zookeeper
