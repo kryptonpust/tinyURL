@@ -1,6 +1,9 @@
 # TinyURL NestJS (Zookeeper, Cassandra)
 
 The TinyURL project is designed to convert long URLs into short URLs. This allows for easier sharing and management of URLs.
+![image](https://github.com/kryptonpust/tinyURL/assets/30733693/08c14c7a-a1ce-435d-91e8-b77e749fc9ac)
+
+
 
 ## Getting Started
 
